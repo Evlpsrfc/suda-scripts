@@ -1,4 +1,4 @@
-![](https://img.shields.io/badge/python-3.x-blue)![](https://img.shields.io/badge/license-MIT-brightgreen)
+![](https://img.shields.io/badge/python-3.x-blue) ![](https://img.shields.io/badge/license-MIT-brightgreen)
 
 ## 项目介绍
 
@@ -10,8 +10,8 @@
 
 - [每日健康打卡（2020.08.26）](https://github.com/Evlpsrfc/suda-scripts/tree/master/scripts/heal-info-coll)
 
-  提供了自动化的每日健康打卡功能，且可以定制打卡的时间（不可打明天及以后的，补打以前的或覆盖今天的可以）。
+  提供了自动化的每日健康打卡功能，且可以定制打卡的时间（不限日期）。
 
 ## 严正声明
 
-本项目仅用于学习目的，不可恶意使用脚本抢课、攻击他人教务系统密码等。
+本项目仅用于学习目的，不可恶意使用脚本。

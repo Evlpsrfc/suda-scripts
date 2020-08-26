@@ -6,6 +6,12 @@ import json
 
 student_id = input('学号：')
 password = input('密码：')
+time = None
+# time = "00:00"
+date = None
+# date = "2049-01-01"
+
+
 login_data = {
     "IDToken1": student_id,
     "IDToken9": password,
@@ -20,10 +26,34 @@ post_url = f"{hir_url}/com.sudytech.portalone.base.db.saveOrUpdate.biz.ext"
 query_url = f"{hir_url}/com.sudytech.portalone.base.db.queryBySqlWithoutPagecond.biz.ext"
 
 
-def query_data(cookie_jar):
+def _query_today(cookie_jar, tbrq):
     payload = {
         "params": {
             "empcode": student_id,
+            "tbrq": tbrq
+        },
+        "querySqlId": "com.sudytech.work.suda.jkxxtb.jkxxtb.queryToday"
+    }
+    r = requests.post(
+        query_url,
+        data=json.dumps(payload),
+        headers={
+            "content-type": "text/json"
+        },
+        cookies=cookie_jar
+    )
+    lst = json.loads(r.text)['list']
+    if len(lst):
+        return lst[0]["ID"]
+
+
+def query_data(cookie_jar, time=None, date=None):
+    now = str(datetime.datetime.now())
+    tbrq = date if date else now[:10]
+    tjsj = f'{tbrq} {time if time else now[11:16]}'
+    payload = {
+        "params": {
+            "empcode": student_id
         },
         "querySqlId": "com.sudytech.work.suda.jkxxtb.jkxxtb.queryNear"
     }
@@ -39,14 +69,14 @@ def query_data(cookie_jar):
     for k, v in json.loads(r.text)['list'][0].items():
         if v is not None:
             entity[k.lower()] = v
+    entity["id"] = _query_today(cookie_jar, tbrq)
+    if entity["id"] is None:
+        del entity["id"]
     entity.update({
-        "tbrq": str(datetime.datetime.now())[:10],
-        # "tbrq": "2020-08-26",
-        "tjsj": str(datetime.datetime.now())[:16],
-        # "tjsj": "2020-08-26 00:00"
+        "tbrq": tbrq,
+        "tjsj": tjsj,
         "__type": "sdo:com.sudytech.work.suda.jkxxtb.jkxxtb.TSudaJkxxtb"
     })
-    # print(entity)
     return json.dumps({'entity': entity})
 
 
@@ -59,7 +89,7 @@ if __name__ == "__main__":
     r = requests.get(mis_url, cookies=r.cookies)
     r = requests.post(
         post_url,
-        data=query_data(r.cookies),
+        data=query_data(r.cookies, time, date),
         headers={
             "content-type": "text/json"
         },
