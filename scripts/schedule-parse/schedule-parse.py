@@ -54,8 +54,8 @@ def parse_schedule(html):
     course_list.sort()
     courses = []
     for course in course_list:
-        course[2] = re.sub('.*\{(.*?)\}.*', '\g<1>', course[2])
-        if len(courses) and courses[-1][1] == course[1]:
+        course[2] = re.sub('.*第(.*?)周.*', '\g<1>', course[2])
+        if len(courses) and all(courses[-1][i] == course[i] for i in  range(1, 5)):
             courses[-1][0][2] += course[0][2]
         else:
             courses.append(course)
