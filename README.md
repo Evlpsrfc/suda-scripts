@@ -8,7 +8,7 @@
 
   提供了教务系统的模拟登录和各学期的课表解析功能，能智能合并课表中“断开”的课程。
 
-- [每日健康打卡（2020.08.26）](https://github.com/Evlpsrfc/suda-scripts/tree/master/scripts/heal-info-coll)
+- [每日健康打卡（2020.09.01）](https://github.com/Evlpsrfc/suda-scripts/tree/master/scripts/heal-info-coll)
 
   提供了自动化的每日健康打卡功能，且可以定制打卡的时间（不限日期）。
 
